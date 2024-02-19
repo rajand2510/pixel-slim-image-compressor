@@ -8,9 +8,9 @@ function ImageCompressorComponent() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [compressedImage, setCompressedImage] = useState(null);
   const [isCompressing, setIsCompressing] = useState(false);
-  const [compressionPercentage, setCompressionPercentage] = useState(80); // Default to 80%
   const [originalSize, setOriginalSize] = useState(null);
   const [compressedSize, setCompressedSize] = useState(null);
+  const [targetSizeKB, setTargetSizeKB] = useState(500); // Default to 500 KB
 
   const handleImageChange = (event) => {
     setSelectedImage(event.target.files[0]);
@@ -26,18 +26,21 @@ function ImageCompressorComponent() {
     setIsCompressing(true);
 
     try {
-      // Adjust the target file size based on the compression percentage
-      const targetSizeMB = (compressionPercentage / 100) * 1; // 1 MB maximum size
-
-      const options = {
-        maxSizeMB: targetSizeMB, // Maximum size in megabytes
+      // Set initial compression options
+      let options = {
+        maxSizeMB: 1, // Maximum size in megabytes
         maxWidthOrHeight: 800, // Maximum width or height
         useWebWorker: true,
       };
 
+      // Adjust the target file size based on the user input
+      const targetSizeMB = targetSizeKB / 1024;
+      options.maxSizeMB = targetSizeMB;
+
       const compressedFile = await ImageCompression(selectedImage, options);
       const compressedDataUrl = URL.createObjectURL(compressedFile);
 
+      // Update state with the compressed image and size
       setCompressedImage(compressedDataUrl);
       setCompressedSize(compressedFile.size);
       setIsCompressing(false);
@@ -70,12 +73,12 @@ function ImageCompressorComponent() {
         </div>
 
         <div className="input-container">
-          <label className="upload-btn-wrapper">
-            Compression Percentage:
+          <label>
+            Target Size (KB):
             <input
               type="number"
-              value={compressionPercentage}
-              onChange={(e) => setCompressionPercentage(parseInt(e.target.value))}
+              value={targetSizeKB}
+              onChange={(e) => setTargetSizeKB(parseInt(e.target.value))}
             />
           </label>
         </div>
