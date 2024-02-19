@@ -1,0 +1,217 @@
+/* MultipleImageCompressorPage.module.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: #6cb8e5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s;
+}
+
+.box {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.uploadBtnWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid #6cb8e5;
+  color: #6cb8e5;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.btn:hover {
+  color: #fff;
+  background: #3498db;
+}
+.uploadBtnWrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.inputContainer,
+.imageContainer,
+.downloadLinkContainer {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  flex-wrap: wrap;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputContainer label {
+  transition: color 0.3s;
+  color: #333;
+}
+
+.inputContainer label:hover {
+  color: #3498db;
+}
+
+.inputContainer input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.inputContainer input:hover {
+  border-color: #3498db;
+}
+
+.inputContainer input[type="file"] {
+  cursor: pointer;
+}
+
+.inputContainer input[type="file"]:hover {
+  background: #f2f2f2;
+}
+
+.inputContainer input[type="number"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.inputContainer input[type="number"]:hover {
+  border-color: #3498db;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.buttonContainer button,
+.downloadLinkContainer button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.buttonContainer button.compressButton {
+  background: #3498db;
+  color: #fff;
+}
+
+.buttonContainer button.compressButton:hover {
+  background: #2980b9;
+}
+
+.downloadLinkContainer button.downloadButton {
+  background: #2ecc71;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.downloadLinkContainer button.downloadButton:hover {
+  background: #27ae60;
+}
+
+.imageContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.imageBox {
+  width: 100%;
+  padding: 20px;
+  max-width: 200px;
+  text-align: center;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.imageBox img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.additionalContent {
+  line-height: 1.5;
+  color: #333;
+}
+
+.imageContainer p {
+  font-size: 14px;
+  color: #555;
+}
+
+.downloadLinkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.downloadLinkContainer button.downloadButton {
+  background: #2ecc71;
+  color: #fff;
+  margin-top: 10px;
+  transition: background 0.3s, color 0.3s;
+}
+
+
+.downloadButton:hover {
+  background: #27ae60;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
