@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import ImageCompressorComponent from './ImageCompressorComponent';
 import MultipleImageCompressorPage from './MultipleImageCompressorPage';
 import './App.css'; 
 // Placeholder for logo
