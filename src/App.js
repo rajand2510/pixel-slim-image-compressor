@@ -19,25 +19,9 @@ function App() {
           <LogoWithName />
         </header>
 
-        {/* Navigation links */}
-        <nav className="navbar">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Single Image Compression
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/multiple" className="nav-link">
-                Multiple Image Compression
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
+   
         {/* Routing */}
         <Routes>
-          <Route path="/" element={<ImageCompressorComponent />} />
           <Route path="/multiple" element={<MultipleImageCompressorPage />} />
         </Routes>
       </div>

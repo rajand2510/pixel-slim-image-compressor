@@ -1,5 +1,3 @@
-// MultipleImageCompressorPage.js
-
 import React, { useState } from 'react';
 import ImageCompression from 'browser-image-compression';
 import JSZip from 'jszip';
@@ -10,11 +8,12 @@ function MultipleImageCompressorPage() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [compressedImages, setCompressedImages] = useState([]);
   const [isCompressing, setIsCompressing] = useState(false);
-  const [targetSizeKB, setTargetSizeKB] = useState(1000); // Default to 200 KB
+  const [targetSizeKB, setTargetSizeKB] = useState(1000); // Default to 1000 KB
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     setSelectedImages(files);
+    setCompressedImages([]); // Reset compressed images when new images are selected
   };
 
   const compressImages = async () => {
@@ -26,7 +25,7 @@ function MultipleImageCompressorPage() {
     setIsCompressing(true);
 
     try {
-      const targetSizeMB = (targetSizeKB / 1024) * 1;
+      const targetSizeMB = targetSizeKB / 1024;
 
       const compressionPromises = selectedImages.map(async (image) => {
         const options = {
@@ -35,15 +34,9 @@ function MultipleImageCompressorPage() {
           useWebWorker: true,
         };
 
-        const originalSize = image.size;
-
         const compressedFile = await ImageCompression(image, options);
 
-        const compressedSize = compressedFile.size;
-
-        return {
-          compressed: { file: compressedFile, size: compressedSize },
-        };
+        return { file: compressedFile, originalSize: image.size, compressedSize: compressedFile.size };
       });
 
       const compressedResults = await Promise.all(compressionPromises);
@@ -60,9 +53,9 @@ function MultipleImageCompressorPage() {
     if (compressedImages.length > 0) {
       const zip = new JSZip();
 
-      compressedImages.forEach(({ compressed }, index) => {
+      compressedImages.forEach(({ file }, index) => {
         const fileName = `compressed_image_${index + 1}.jpg`;
-        zip.file(fileName, compressed.file);
+        zip.file(fileName, file);
       });
 
       zip.generateAsync({ type: 'blob' }).then((content) => {
@@ -99,20 +92,7 @@ function MultipleImageCompressorPage() {
           {isCompressing && <div className={styles.loader}></div>}
         </div>
       </div>
-
-      {compressedImages.length > 0 && (
-        <div className={styles.box}>
-          <div className={styles.imageContainer}>
-            {compressedImages.map(({ compressed }, index) => (
-              <div className={styles.imageBox} key={index}>
-                <img src={URL.createObjectURL(compressed.file)} alt={`Image ${index + 1}`} /> 
-                <p>Compressed Size: {Math.round(compressed.size / 1024)} KB</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
+      
       {compressedImages.length > 0 && (
         <div className={styles.downloadLinkContainer}>
           <button onClick={downloadCompressedImages} className={styles.downloadButton}>
@@ -120,6 +100,28 @@ function MultipleImageCompressorPage() {
           </button>
         </div>
       )}
+
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBox}>
+          <p>Original Images</p>
+          {selectedImages.map((originalImage, index) => (
+            <div key={index}>
+              <img src={URL.createObjectURL(originalImage)} alt={`Original Image ${index + 1}`} />
+              <p>Original Size: {Math.round(originalImage.size / 1024)} KB</p>
+            </div>
+          ))}
+        </div>
+        <div className={styles.imageBox}>
+          <p>Compressed Images</p>
+          {compressedImages.map(({ file, compressedSize }, index) => (
+            <div key={index}>
+              <img src={URL.createObjectURL(file)} alt={`Compressed Image ${index + 1}`} />
+              <p>Compressed Size: {Math.round(compressedSize / 1024)} KB</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }
