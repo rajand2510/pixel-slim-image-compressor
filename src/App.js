@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MultipleImageCompressorPage from './MultipleImageCompressorPage';
 import './App.css'; 
+
 // Placeholder for logo
 const LogoWithName = () => (
   <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -18,10 +19,9 @@ function App() {
           <LogoWithName />
         </header>
 
-   
-        {/* Routing */}
+        {/* Render only the MultipleImageCompressorPage */}
         <Routes>
-          <Route path="/multiple" element={<MultipleImageCompressorPage />} />
+          <Route path="/" element={<MultipleImageCompressorPage />} />
         </Routes>
       </div>
     </Router>
