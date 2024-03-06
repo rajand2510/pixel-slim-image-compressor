@@ -29,7 +29,7 @@ function App() {
         <div className="feature-blocks-container">
   <div className="feature-block">
     <FaTachometerAlt size={32} />
-    <p>Lightning-fast compression, zero wait time</p>
+    <p>Lightning-fast compression, less wait time</p>
   </div>
   <div className="feature-block">
     <FaImage size={32} />
