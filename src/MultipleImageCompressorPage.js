@@ -51,18 +51,26 @@ function MultipleImageCompressorPage() {
 
   const downloadCompressedImages = () => {
     if (compressedImages.length > 0) {
-      const zip = new JSZip();
-
-      compressedImages.forEach(({ file }, index) => {
-        const fileName = `compressed_image_${index + 1}.jpg`;
-        zip.file(fileName, file);
-      });
-
-      zip.generateAsync({ type: 'blob' }).then((content) => {
-        saveAs(content, 'compressed_images.zip');
-      });
+      if (compressedImages.length === 1) {
+        // If only one image is compressed, download it directly
+        const imageBlob = compressedImages[0].file;
+        saveAs(imageBlob, 'compressed_image.jpg');
+      } else {
+        // If multiple images are compressed, create a zip file
+        const zip = new JSZip();
+  
+        compressedImages.forEach(({ file }, index) => {
+          const fileName = `compressed_image_${index + 1}.jpg`;
+          zip.file(fileName, file);
+        });
+  
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          saveAs(content, 'compressed_images.zip');
+        });
+      }
     }
   };
+  
 
   return (
     <div className={styles.container}>
