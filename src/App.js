@@ -33,7 +33,7 @@ function App() {
   </div>
   <div className="feature-block">
     <FaImage size={32} />
-    <p>Pixel-perfect compression, no loss in brilliance</p>
+    <p>Pixel-perfect compression, less loss in brilliance</p>
   </div>
   <div className="feature-block">
     <FaThumbsUp size={32} />
